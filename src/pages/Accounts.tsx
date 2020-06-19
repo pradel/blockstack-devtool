@@ -4,6 +4,7 @@ import { Plus } from "react-feather";
 import Tooltip from "@reach/tooltip";
 import { makeRandomPrivKey } from "@blockstack/stacks-transactions";
 import { AccountItem } from "../components/AccountItem";
+import { HeaderInfos } from "../components/HeaderInfos";
 
 const accountsStorageKey = "blockstack-accounts";
 
@@ -27,6 +28,8 @@ export const Accounts = () => {
 
   return (
     <Container px={4} py={4}>
+      <HeaderInfos />
+
       {accounts.map((account) => (
         <AccountItem
           key={account.privateKeyHex}

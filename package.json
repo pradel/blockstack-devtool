@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@blockstack/stacks-blockchain-sidecar-types": "0.0.18",
     "@blockstack/stacks-transactions": "0.4.6",
     "@reach/dialog": "0.10.4",
     "@reach/tooltip": "0.10.4",
@@ -16,6 +17,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-feather": "2.0.8",
+    "swr": "0.2.3",
     "theme-ui": "0.3.1"
   },
   "devDependencies": {
