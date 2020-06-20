@@ -45,22 +45,22 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
   const handleCloseSettings = () => setShowSettingsDialog(false);
 
   return (
-    <Grid columns={"2fr 1fr 1fr auto"}>
-      <Box p={2}>
+    <Grid columns={"3fr 1fr 1fr auto"} py={2}>
+      <Box>
         <Text variant="caps">Address:</Text>
         <Text>{address}</Text>
       </Box>
-      <Box p={2}>
+      <Box>
         <Text variant="caps">Balance:</Text>
         <Text>
           {!balanceData ? "..." : microToStacks(balanceData.stx.balance)} STX
         </Text>
       </Box>
-      <Box p={2}>
+      <Box>
         <Text variant="caps">Tx count:</Text>
         <Text>{!transactionsData ? "..." : transactionsData.total}</Text>
       </Box>
-      <Box p={2} sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ display: "flex", alignItems: "center" }}>
         <Tooltip label="Settings">
           <IconButton
             sx={{ height: 8, width: 8, cursor: "pointer" }}
