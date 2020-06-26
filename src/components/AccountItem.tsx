@@ -68,20 +68,24 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
   );
 
   return (
-    <Grid templateColumns={"3fr 1fr 1fr auto"} py={2}>
+    <Grid templateColumns={"3fr auto auto auto auto"} py={4}>
       <Box>
         <Text>Address:</Text>
         <Text>{address}</Text>
       </Box>
-      <Box>
+      <Box mr="16">
         <Text>Balance:</Text>
         <Text>
           {!balanceData ? "..." : microToStacks(balanceData.stx.balance)} STX
         </Text>
       </Box>
-      <Box>
+      <Box mr="16">
         <Text>Tx count:</Text>
         <Text>{!transactionsData ? "..." : transactionsData.total}</Text>
+      </Box>
+      <Box mr="16">
+        <Text>Index:</Text>
+        <Text>{derivationIndex}</Text>
       </Box>
       <Flex alignItems="center">
         <Tooltip label="Settings">
