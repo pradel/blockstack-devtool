@@ -13,6 +13,13 @@ export const microToStacks = (amountInMicroStacks: string) =>
   Number(amountInMicroStacks) / Math.pow(10, 6);
 
 /**
+ * @description Convert stacks to micro.
+ * @param amountInStacks - the amount of stacks to convert
+ */
+export const stacksToMicro = (amountInStacks: string) =>
+  Number(amountInStacks) * Math.pow(10, 6);
+
+/**
  * @description Return the derivation path based on the index
  */
 export const getDerivationPathWithIndex = (index: number) => {

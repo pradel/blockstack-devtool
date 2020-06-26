@@ -17,6 +17,7 @@
     "@emotion/styled": "10.0.27",
     "@reach/tooltip": "0.10.5",
     "emotion-theming": "10.0.27",
+    "formik": "2.1.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-feather": "2.0.8",

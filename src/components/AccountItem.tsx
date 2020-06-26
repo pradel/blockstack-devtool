@@ -13,7 +13,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/core";
-import { Settings } from "react-feather";
+import { Settings, Send } from "react-feather";
 import Tooltip from "@reach/tooltip";
 import { ecPairToHexString } from "blockstack";
 import { ECPair } from "bitcoinjs-lib";
@@ -26,6 +26,7 @@ import type { TransactionResults } from "@blockstack/stacks-blockchain-sidecar-t
 import useSWR from "swr";
 import { fetcher, microToStacks, getDerivationPathWithIndex } from "../utils";
 import { useAppConfig } from "../context/AppConfigContext";
+import { AccountItemSendModal } from "./AccountItemSendModal";
 
 interface BalanceResponse {
   stx: {
@@ -56,6 +57,11 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isOpenSend,
+    onOpen: onOpenSend,
+    onClose: onCloseSend,
+  } = useDisclosure();
 
   const { data: balanceData } = useSWR<BalanceResponse>(
     `https://sidecar.staging.blockstack.xyz/sidecar/v1/address/${address}/balances`,
@@ -88,10 +94,24 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
         <Text>{derivationIndex}</Text>
       </Box>
       <Flex alignItems="center">
+        <Tooltip label="Send">
+          <IconButton
+            aria-label="Send"
+            mr="2"
+            icon={Send}
+            onClick={onOpenSend}
+          />
+        </Tooltip>
         <Tooltip label="Settings">
           <IconButton aria-label="Settings" icon={Settings} onClick={onOpen} />
         </Tooltip>
       </Flex>
+
+      <AccountItemSendModal
+        isOpen={isOpenSend}
+        onClose={onCloseSend}
+        privateKeyHex={privateKeyHex}
+      />
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
