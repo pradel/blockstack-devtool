@@ -27,6 +27,7 @@ import useSWR from "swr";
 import { fetcher, microToStacks, getDerivationPathWithIndex } from "../utils";
 import { useAppConfig } from "../context/AppConfigContext";
 import { AccountItemSendModal } from "./AccountItemSendModal";
+import { AccountItemReceiveModal } from "./AccountItemReceiveModal";
 
 interface BalanceResponse {
   stx: {
@@ -61,6 +62,11 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
     isOpen: isOpenSend,
     onOpen: onOpenSend,
     onClose: onCloseSend,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenReceive,
+    onOpen: onOpenReceive,
+    onClose: onCloseReceive,
   } = useDisclosure();
 
   const { data: balanceData } = useSWR<BalanceResponse>(
@@ -102,6 +108,15 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
             onClick={onOpenSend}
           />
         </Tooltip>
+        <Tooltip label="Receive">
+          <IconButton
+            aria-label="Receive"
+            mr="2"
+            transform="rotate(180deg)"
+            icon={Send}
+            onClick={onOpenReceive}
+          />
+        </Tooltip>
         <Tooltip label="Settings">
           <IconButton aria-label="Settings" icon={Settings} onClick={onOpen} />
         </Tooltip>
@@ -111,6 +126,12 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
         isOpen={isOpenSend}
         onClose={onCloseSend}
         privateKeyHex={privateKeyHex}
+      />
+
+      <AccountItemReceiveModal
+        isOpen={isOpenReceive}
+        onClose={onCloseReceive}
+        address={address}
       />
 
       <Modal isOpen={isOpen} onClose={onClose}>
