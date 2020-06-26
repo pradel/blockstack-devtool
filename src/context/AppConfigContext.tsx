@@ -38,6 +38,7 @@ export const AppConfigProvider = ({ children }: AppConfigProviderProps) => {
     } else {
       loadAppConfig(JSON.parse(data));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const generateNewAppConfig = async () => {
