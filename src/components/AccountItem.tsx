@@ -15,6 +15,8 @@ import {
 } from "@chakra-ui/core";
 import { Settings } from "react-feather";
 import Tooltip from "@reach/tooltip";
+import { ecPairToHexString } from "blockstack";
+import { ECPair } from "bitcoinjs-lib";
 import {
   createStacksPrivateKey,
   getAddressFromPrivateKey,
@@ -22,7 +24,8 @@ import {
 } from "@blockstack/stacks-transactions";
 import type { TransactionResults } from "@blockstack/stacks-blockchain-sidecar-types";
 import useSWR from "swr";
-import { fetcher, microToStacks } from "../utils";
+import { fetcher, microToStacks, getDerivationPathWithIndex } from "../utils";
+import { useAppConfig } from "../context/AppConfigContext";
 
 interface BalanceResponse {
   stx: {
@@ -31,10 +34,21 @@ interface BalanceResponse {
 }
 
 interface AccountItemProps {
-  privateKeyHex: string;
+  derivationIndex: number;
 }
 
-export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
+export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
+  const { appConfig } = useAppConfig();
+
+  const derivationPath = getDerivationPathWithIndex(derivationIndex);
+  const childKey = appConfig.rootNode.derivePath(derivationPath);
+  if (!childKey.privateKey) {
+    throw new Error(
+      "Unable to derive private key from `rootNode`, bip32 master keychain"
+    );
+  }
+  const ecPair = ECPair.fromPrivateKey(childKey.privateKey);
+  const privateKeyHex = ecPairToHexString(ecPair);
   const privateKey = createStacksPrivateKey(privateKeyHex);
   const address = getAddressFromPrivateKey(
     privateKey.data,

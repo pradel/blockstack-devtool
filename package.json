@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@blockstack/keychain": "0.6.0",
     "@blockstack/stacks-blockchain-sidecar-types": "0.0.18",
     "@blockstack/stacks-transactions": "0.4.6",
     "@chakra-ui/core": "0.8.0",
