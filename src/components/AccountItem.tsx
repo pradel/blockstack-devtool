@@ -84,9 +84,9 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
           <Text>{privateKeyHex}</Text>
         </Box>
 
-        <Box py={2} sx={{ display: "flex", justifyContent: "center" }}>
+        <Flex py={2} justifyContent="center">
           <Button onClick={handleCloseSettings}>Close</Button>
-        </Box>
+        </Flex>
       </Dialog>
     </Grid>
   );
