@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Text, IconButton, Button, Grid } from "theme-ui";
+import { Button, Box, Grid, IconButton, Text, Flex } from "@chakra-ui/core";
 import { Settings } from "react-feather";
 import Tooltip from "@reach/tooltip";
 import { Dialog } from "@reach/dialog";
@@ -45,31 +45,30 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
   const handleCloseSettings = () => setShowSettingsDialog(false);
 
   return (
-    <Grid columns={"3fr 1fr 1fr auto"} py={2}>
+    <Grid templateColumns={"3fr 1fr 1fr auto"} py={2}>
       <Box>
-        <Text variant="caps">Address:</Text>
+        <Text>Address:</Text>
         <Text>{address}</Text>
       </Box>
       <Box>
-        <Text variant="caps">Balance:</Text>
+        <Text>Balance:</Text>
         <Text>
           {!balanceData ? "..." : microToStacks(balanceData.stx.balance)} STX
         </Text>
       </Box>
       <Box>
-        <Text variant="caps">Tx count:</Text>
+        <Text>Tx count:</Text>
         <Text>{!transactionsData ? "..." : transactionsData.total}</Text>
       </Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Flex alignItems="center">
         <Tooltip label="Settings">
           <IconButton
-            sx={{ height: 8, width: 8, cursor: "pointer" }}
+            aria-label="Settings"
+            icon={Settings}
             onClick={handleOpenSettings}
-          >
-            <Settings />
-          </IconButton>
+          />
         </Tooltip>
-      </Box>
+      </Flex>
 
       <Dialog
         aria-label="Informations"
@@ -77,18 +76,16 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
         onDismiss={handleCloseSettings}
       >
         <Box py={2}>
-          <Text variant="caps">Address:</Text>
+          <Text>Address:</Text>
           <Text>{address}</Text>
         </Box>
         <Box py={2}>
-          <Text variant="caps">Private key:</Text>
+          <Text>Private key:</Text>
           <Text>{privateKeyHex}</Text>
         </Box>
 
         <Box py={2} sx={{ display: "flex", justifyContent: "center" }}>
-          <Button sx={{ cursor: "pointer" }} onClick={handleCloseSettings}>
-            Close
-          </Button>
+          <Button onClick={handleCloseSettings}>Close</Button>
         </Box>
       </Dialog>
     </Grid>

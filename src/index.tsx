@@ -1,16 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ThemeProvider } from "theme-ui";
+import { ThemeProvider, CSSReset, theme as chakraTheme } from "@chakra-ui/core";
 import "@reach/tooltip/styles.css";
 import "@reach/dialog/styles.css";
-import { theme } from "./theme";
 import { Accounts } from "./pages/Accounts";
-
-console.log(theme);
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={chakraTheme}>
+      <CSSReset />
       <Accounts />
     </ThemeProvider>
   </React.StrictMode>,

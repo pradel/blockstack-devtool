@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Box, IconButton } from "theme-ui";
+import { Box, IconButton, Flex } from "@chakra-ui/core";
 import { Plus } from "react-feather";
 import Tooltip from "@reach/tooltip";
 import { makeRandomPrivKey } from "@blockstack/stacks-transactions";
@@ -27,7 +27,7 @@ export const Accounts = () => {
   };
 
   return (
-    <Container px={4} py={4}>
+    <Box px={4} py={4} maxWidth="1024px" margin="0 auto">
       <HeaderInfos />
 
       {accounts.map((account) => (
@@ -37,20 +37,15 @@ export const Accounts = () => {
         />
       ))}
 
-      <Box pt={4} sx={{ display: "flex", justifyContent: "center" }}>
+      <Flex pt={4} justifyContent="center">
         <Tooltip label="Generate a new account">
           <IconButton
-            sx={{
-              height: 8,
-              width: 8,
-              cursor: "pointer",
-            }}
+            aria-label="Generate new"
+            icon={Plus}
             onClick={handleGenerateNewKey}
-          >
-            <Plus />
-          </IconButton>
+          />
         </Tooltip>
-      </Box>
-    </Container>
+      </Flex>
+    </Box>
   );
 };
