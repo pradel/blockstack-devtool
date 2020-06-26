@@ -14,7 +14,6 @@
     "@chakra-ui/core": "0.8.0",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
-    "@reach/dialog": "0.10.5",
     "@reach/tooltip": "0.10.5",
     "emotion-theming": "10.0.27",
     "react": "16.13.1",

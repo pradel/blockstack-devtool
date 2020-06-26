@@ -1,8 +1,20 @@
-import React, { useState } from "react";
-import { Button, Box, Grid, IconButton, Text, Flex } from "@chakra-ui/core";
+import React from "react";
+import {
+  Button,
+  Box,
+  Grid,
+  IconButton,
+  Text,
+  Flex,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  useDisclosure,
+  ModalBody,
+  ModalFooter,
+} from "@chakra-ui/core";
 import { Settings } from "react-feather";
 import Tooltip from "@reach/tooltip";
-import { Dialog } from "@reach/dialog";
 import {
   createStacksPrivateKey,
   getAddressFromPrivateKey,
@@ -29,7 +41,7 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
     TransactionVersion.Testnet
   );
 
-  const [showSettingsDialog, setShowSettingsDialog] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { data: balanceData } = useSWR<BalanceResponse>(
     `https://sidecar.staging.blockstack.xyz/sidecar/v1/address/${address}/balances`,
@@ -40,9 +52,6 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
     `https://sidecar.staging.blockstack.xyz/sidecar/v1/address/${address}/transactions?limit=1`,
     fetcher
   );
-
-  const handleOpenSettings = () => setShowSettingsDialog(true);
-  const handleCloseSettings = () => setShowSettingsDialog(false);
 
   return (
     <Grid templateColumns={"3fr 1fr 1fr auto"} py={2}>
@@ -62,32 +71,28 @@ export const AccountItem = ({ privateKeyHex }: AccountItemProps) => {
       </Box>
       <Flex alignItems="center">
         <Tooltip label="Settings">
-          <IconButton
-            aria-label="Settings"
-            icon={Settings}
-            onClick={handleOpenSettings}
-          />
+          <IconButton aria-label="Settings" icon={Settings} onClick={onOpen} />
         </Tooltip>
       </Flex>
 
-      <Dialog
-        aria-label="Informations"
-        isOpen={showSettingsDialog}
-        onDismiss={handleCloseSettings}
-      >
-        <Box py={2}>
-          <Text>Address:</Text>
-          <Text>{address}</Text>
-        </Box>
-        <Box py={2}>
-          <Text>Private key:</Text>
-          <Text>{privateKeyHex}</Text>
-        </Box>
-
-        <Flex py={2} justifyContent="center">
-          <Button onClick={handleCloseSettings}>Close</Button>
-        </Flex>
-      </Dialog>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent maxWidth="50rem">
+          <ModalBody>
+            <Box py={2}>
+              <Text>Address:</Text>
+              <Text>{address}</Text>
+            </Box>
+            <Box py={2}>
+              <Text>Private key:</Text>
+              <Text>{privateKeyHex}</Text>
+            </Box>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Grid>
   );
 };

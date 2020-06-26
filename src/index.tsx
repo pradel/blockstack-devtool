@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider, CSSReset, theme as chakraTheme } from "@chakra-ui/core";
 import "@reach/tooltip/styles.css";
-import "@reach/dialog/styles.css";
 import { Accounts } from "./pages/Accounts";
 
 ReactDOM.render(
