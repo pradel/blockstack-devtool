@@ -39,6 +39,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-feather": "2.0.8",
+    "react-router-dom": "5.2.0",
     "swr": "0.2.3"
   },
   "devDependencies": {
@@ -46,6 +47,7 @@
     "@types/qrcode.react": "1.0.1",
     "@types/react": "16.9.38",
     "@types/react-dom": "16.9.8",
+    "@types/react-router-dom": "5.1.5",
     "electron": "9.0.5",
     "electron-builder": "22.7.0",
     "electron-store": "5.2.0",
