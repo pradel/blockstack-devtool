@@ -2,6 +2,7 @@ const { app, dialog, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 const { readdirSync } = require("fs");
+const Store = require("electron-store");
 
 let mainWindow;
 
@@ -54,3 +55,22 @@ ipcMain.handle("get-folder-at-path", async (event, folderPath) => {
     .map((dirent) => dirent.name);
   return result;
 });
+
+ipcMain.handle("get-project-store-value", async (event, folderPath, key) => {
+  const store = new Store({
+    cwd: folderPath,
+  });
+  const result = store.get(key);
+  return result;
+});
+
+ipcMain.handle(
+  "set-project-store-value",
+  async (event, folderPath, key, value) => {
+    const store = new Store({
+      cwd: folderPath,
+    });
+    const result = store.set(key, value);
+    return result;
+  }
+);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Text,
@@ -12,6 +12,8 @@ import {
   CloseButton,
   useDisclosure,
 } from "@chakra-ui/core";
+import { Accounts } from "./Accounts";
+import { AppConfigProvider } from "../context/AppConfigContext";
 const { ipcRenderer } = window.require("electron");
 
 export const Home = () => {
@@ -20,6 +22,7 @@ export const Home = () => {
     onOpen: onOpenError,
     onClose: onCloseError,
   } = useDisclosure();
+  const [folderPath, setFolderPath] = useState<string>();
 
   const onSelectFolder = async () => {
     const result: { filePaths?: string[] } = await ipcRenderer.invoke(
@@ -27,17 +30,31 @@ export const Home = () => {
     );
     if (result.filePaths && result.filePaths.length > 0) {
       const folderPath = result.filePaths[0];
+
       const folders: string[] = await ipcRenderer.invoke(
         "get-folder-at-path",
         folderPath
       );
+
       const isValid = folders.find((folder) => folder === "contracts");
       if (!isValid) {
         onOpenError();
         return;
       }
+
+      setFolderPath(folderPath);
     }
   };
+
+  if (folderPath) {
+    return (
+      <AppConfigProvider folderPath={folderPath}>
+        <Box backgroundColor="white">
+          <Accounts />
+        </Box>
+      </AppConfigProvider>
+    );
+  }
 
   return (
     <Box backgroundColor="white">
