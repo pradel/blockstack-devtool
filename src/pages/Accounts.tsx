@@ -1,16 +1,7 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  Flex,
-  Link,
-  IconButton,
-  Button,
-  Divider,
-} from "@chakra-ui/core";
+import { Box, Text, Flex, Divider } from "@chakra-ui/core";
 import { derivationPaths } from "@blockstack/keychain";
 import { ChainID } from "@blockstack/stacks-transactions";
-import { GitHub, Twitter } from "react-feather";
 import { AccountItem } from "../components/AccountItem";
 import { HeaderInfos } from "../components/HeaderInfos";
 import { useAppConfig } from "../context/AppConfigContext";
