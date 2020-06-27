@@ -56,6 +56,13 @@ ipcMain.handle("get-folder-at-path", async (event, folderPath) => {
   return result;
 });
 
+ipcMain.handle("get-files-at-path", async (event, folderPath) => {
+  const result = readdirSync(folderPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isFile())
+    .map((dirent) => dirent.name);
+  return result;
+});
+
 ipcMain.handle("get-project-store-value", async (event, folderPath, key) => {
   const store = new Store({
     cwd: folderPath,
