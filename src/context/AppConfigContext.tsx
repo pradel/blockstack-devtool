@@ -6,6 +6,7 @@ import { bip32 } from "bitcoinjs-lib";
 const { ipcRenderer } = window.require("electron");
 
 interface BlockstackAppConfig {
+  folderPath: string;
   mnemonic: string;
   numberDisplayed: number;
   rootNode: bip32.BIP32Interface;
@@ -66,6 +67,7 @@ export const AppConfigProvider = ({
     const seedBuffer = await mnemonicToSeed(mnemonic);
     const rootNode = bip32.fromSeed(seedBuffer);
     setAppConfig({
+      folderPath,
       mnemonic: mnemonic,
       numberDisplayed: numberDisplayed,
       rootNode,
