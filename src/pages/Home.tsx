@@ -12,8 +12,8 @@ import {
   CloseButton,
   useDisclosure,
 } from "@chakra-ui/core";
-import { Accounts } from "./Accounts";
 import { AppConfigProvider } from "../context/AppConfigContext";
+import { Router } from "../Router";
 const { ipcRenderer } = window.require("electron");
 
 export const Home = () => {
@@ -50,7 +50,7 @@ export const Home = () => {
     return (
       <AppConfigProvider folderPath={folderPath}>
         <Box backgroundColor="white">
-          <Accounts />
+          <Router />
         </Box>
       </AppConfigProvider>
     );
