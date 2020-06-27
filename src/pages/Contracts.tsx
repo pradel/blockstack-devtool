@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Text,
-  Flex,
-  Divider,
-  List,
-  ListItem,
-  ListIcon,
-} from "@chakra-ui/core";
+import { Box, List, ListItem, Button } from "@chakra-ui/core";
 import { FileText } from "react-feather";
 import { useAppConfig } from "../context/AppConfigContext";
 import { Header } from "../components/Header";
@@ -41,8 +33,14 @@ export const Contracts = () => {
           <List spacing="3">
             {files.map((file) => (
               <ListItem key={file}>
-                <ListIcon icon={FileText} />
-                {file}
+                <Button
+                  leftIcon={FileText}
+                  variant="ghost"
+                  size="sm"
+                  color="gray.700"
+                >
+                  {file}
+                </Button>
               </ListItem>
             ))}
           </List>
