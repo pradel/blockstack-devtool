@@ -1,14 +1,41 @@
 import React from "react";
-import { Flex, Text, Heading, Button, Box } from "@chakra-ui/core";
+import {
+  Flex,
+  Text,
+  Heading,
+  Button,
+  Box,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  CloseButton,
+  useDisclosure,
+} from "@chakra-ui/core";
 const { ipcRenderer } = window.require("electron");
 
 export const Home = () => {
+  const {
+    isOpen: isOpenError,
+    onOpen: onOpenError,
+    onClose: onCloseError,
+  } = useDisclosure();
+
   const onSelectFolder = async () => {
     const result: { filePaths?: string[] } = await ipcRenderer.invoke(
       "select-project-folder"
     );
     if (result.filePaths && result.filePaths.length > 0) {
       const folderPath = result.filePaths[0];
+      const folders: string[] = await ipcRenderer.invoke(
+        "get-folder-at-path",
+        folderPath
+      );
+      const isValid = folders.find((folder) => folder === "contracts");
+      if (!isValid) {
+        onOpenError();
+        return;
+      }
     }
   };
 
@@ -34,6 +61,30 @@ export const Home = () => {
           orci a hendrerit convallis, odio ex volutpat nunc, ac sodales felis
           dolor at purus.
         </Text>
+        {isOpenError && (
+          <Alert
+            status="error"
+            mb="8"
+            flexDirection="column"
+            justifyContent="center"
+            textAlign="center"
+          >
+            <AlertIcon size="30px" mr={0} />
+            <AlertTitle mt={4} mb={1}>
+              Invalid project.
+            </AlertTitle>
+            <AlertDescription maxWidth="md">
+              It looks like the project you selected is not a valid blockstack
+              project. We couldn't find a "contract" folder inside.
+            </AlertDescription>
+            <CloseButton
+              position="absolute"
+              right="8px"
+              top="8px"
+              onClick={onCloseError}
+            />
+          </Alert>
+        )}
         <Button variantColor="teal" mb="2" onClick={onSelectFolder}>
           Select folder
         </Button>

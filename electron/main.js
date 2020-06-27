@@ -1,6 +1,7 @@
 const { app, dialog, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
+const { readdirSync } = require("fs");
 
 let mainWindow;
 
@@ -44,5 +45,12 @@ ipcMain.handle("select-project-folder", async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
     properties: ["openDirectory"],
   });
+  return result;
+});
+
+ipcMain.handle("get-folder-at-path", async (event, folderPath) => {
+  const result = readdirSync(folderPath, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .map((dirent) => dirent.name);
   return result;
 });
