@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, dialog, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
 
@@ -12,7 +12,14 @@ function createWindow() {
       protocol: "file:",
       slashes: true,
     });
-  mainWindow = new BrowserWindow({ width: 1200, height: 800 });
+  mainWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      nodeIntegration: true,
+      preload: path.join(__dirname, "preload.js"),
+    },
+  });
   mainWindow.loadURL(startUrl);
   mainWindow.on("closed", function () {
     mainWindow = null;
@@ -31,4 +38,11 @@ app.on("activate", function () {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.handle("select-project-folder", async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ["openDirectory"],
+  });
+  return result;
 });
