@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { ThemeProvider, CSSReset, theme as chakraTheme } from "@chakra-ui/core";
 import "@reach/tooltip/styles.css";
-import { Accounts } from "./pages/Accounts";
+import { Home } from "./pages/Home";
 import { AppConfigProvider } from "./context/AppConfigContext";
 
 ReactDOM.render(
@@ -10,7 +10,7 @@ ReactDOM.render(
     <ThemeProvider theme={chakraTheme}>
       <CSSReset />
       <AppConfigProvider>
-        <Accounts />
+        <Home />
       </AppConfigProvider>
     </ThemeProvider>
   </React.StrictMode>,
