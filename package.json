@@ -1,11 +1,29 @@
 {
   "name": "blockstack-devtools",
   "private": true,
+  "version": "0.0.1",
+  "productName": "blockstack-devtool",
+  "main": "electron/main.js",
+  "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "export BROWSER=none && react-scripts start",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
+    "build-electron": "mkdir build/src && cp -r electron/. build/electron",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js -c.mac.identity=null --publish never",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "blockstack-devtool",
+      "owner": "pradel"
+    }
   },
   "dependencies": {
     "@blockstack/keychain": "0.6.0",
@@ -28,6 +46,9 @@
     "@types/qrcode.react": "1.0.1",
     "@types/react": "16.9.38",
     "@types/react-dom": "16.9.8",
+    "electron": "9.0.5",
+    "electron-builder": "22.7.0",
+    "electron-store": "5.2.0",
     "react-scripts": "3.4.1",
     "typescript": "3.9.5"
   },
