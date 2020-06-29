@@ -32,7 +32,12 @@ export const Header = () => {
               Contracts
             </Button>
           </Flex>
-          <Button leftIcon={Settings} variant="ghost">
+          <Button
+            leftIcon={Settings}
+            variant="ghost"
+            onClick={() => history.push("/settings")}
+            isActive={location.pathname === "/settings"}
+          >
             Settings
           </Button>
         </Flex>
