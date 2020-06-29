@@ -16,6 +16,7 @@ A simple devtool interface to help you manage different wallets and contracts on
 ## Screenshots
 
 <div align="center"><img src="assets/homepage.png" width="600" ></div>
+<div align="center"><img src="assets/contractspage.png" width="600" ></div>
 
 ## Local Development
 
