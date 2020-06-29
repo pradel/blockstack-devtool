@@ -1,6 +1,6 @@
 # blockstack-devtool
 
-A simple devtool interface to help you manage different wallets on testnet.
+A simple devtool interface to help you manage different wallets and contracts on testnet.
 
 ## Features
 

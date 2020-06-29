@@ -11,6 +11,7 @@ import {
   AlertDescription,
   CloseButton,
   useDisclosure,
+  Link,
 } from "@chakra-ui/core";
 import { AppConfigProvider } from "../context/AppConfigContext";
 import { Router } from "../Router";
@@ -71,12 +72,15 @@ export const Home = () => {
           blockstack-connect
         </Heading>
         <Text mb="8" textAlign="center">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras bibendum
-          pretium massa, eget pulvinar lectus ultrices quis. Nulla facilisi.
-          Praesent sollicitudin in velit mollis luctus. Vestibulum congue odio
-          sit amet risus bibendum, vel bibendum quam feugiat. Donec viverra,
-          orci a hendrerit convallis, odio ex volutpat nunc, ac sodales felis
-          dolor at purus.
+          blockstack-connect is a simple devtool interface to help you manage
+          different wallets and contracts on testnet. If you have any question
+          or feedback on the app feel free to{" "}
+          <Link isExternal href="https://github.com/pradel/blockstack-devtool">
+            open an issue on Github
+          </Link>
+          .
+          <br />
+          Hope you will like it :)
         </Text>
         {isOpenError && (
           <Alert
