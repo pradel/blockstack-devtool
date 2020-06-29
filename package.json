@@ -2,13 +2,13 @@
   "name": "blockstack-devtools",
   "private": true,
   "version": "0.0.1",
-  "productName": "blockstack-devtool",
   "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "export BROWSER=none && react-scripts start",
     "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
-    "build": "react-scripts build",
+    "build": "rm -rf build dist && yarn build-react && yarn build-electron && yarn package",
+    "build-react": "react-scripts build",
     "build-electron": "mkdir build/src && cp -r electron/. build/electron",
     "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js -c.mac.identity=null --publish never",
     "test": "react-scripts test",
@@ -23,7 +23,9 @@
       "provider": "github",
       "repo": "blockstack-devtool",
       "owner": "pradel"
-    }
+    },
+    "productName": "blockstack-devtool",
+    "appId": "com.leopradel.blockstack-devtool"
   },
   "dependencies": {
     "@blockstack/keychain": "0.6.0",
@@ -33,6 +35,7 @@
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
     "@reach/tooltip": "0.10.5",
+    "electron-store": "5.2.0",
     "emotion-theming": "10.0.27",
     "formik": "2.1.4",
     "qrcode.react": "1.0.0",
@@ -50,7 +53,6 @@
     "@types/react-router-dom": "5.1.5",
     "electron": "9.0.5",
     "electron-builder": "22.7.0",
-    "electron-store": "5.2.0",
     "react-scripts": "3.4.1",
     "typescript": "3.9.5"
   },
