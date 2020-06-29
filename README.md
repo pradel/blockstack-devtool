@@ -13,4 +13,4 @@ A simple devtool interface to help you manage different wallets and contracts on
 - Display informations about the testnet (eg: current block)
 - Easy access to the private key of all the accounts for testing (eg: to be reused easily with the blockstack cli)
 
-<div style="text-align:center"><img src="assets/homepage.png" width="600" ></div>
+<div align="center"><img src="assets/homepage.png" width="600" ></div>
