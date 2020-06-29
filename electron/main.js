@@ -1,7 +1,7 @@
 const { app, dialog, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const url = require("url");
-const { readdirSync } = require("fs");
+const { readdirSync, readFileSync } = require("fs");
 const Store = require("electron-store");
 
 let mainWindow;
@@ -60,6 +60,11 @@ ipcMain.handle("get-files-at-path", async (event, folderPath) => {
   const result = readdirSync(folderPath, { withFileTypes: true })
     .filter((dirent) => dirent.isFile())
     .map((dirent) => dirent.name);
+  return result;
+});
+
+ipcMain.handle("get-file-at-path", async (event, filePath) => {
+  const result = readFileSync(filePath).toString();
   return result;
 });
 

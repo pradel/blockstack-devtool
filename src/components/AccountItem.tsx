@@ -82,21 +82,21 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
   return (
     <Grid templateColumns={"3fr auto auto auto auto"} py={4}>
       <Box>
-        <Text>Address:</Text>
+        <Text fontWeight="700">Address:</Text>
         <Text>{address}</Text>
       </Box>
       <Box mr="16">
-        <Text>Balance:</Text>
+        <Text fontWeight="700">Balance:</Text>
         <Text>
           {!balanceData ? "..." : microToStacks(balanceData.stx.balance)} STX
         </Text>
       </Box>
       <Box mr="16">
-        <Text>Tx count:</Text>
+        <Text fontWeight="700">Tx count:</Text>
         <Text>{!transactionsData ? "..." : transactionsData.total}</Text>
       </Box>
       <Box mr="16">
-        <Text>Index:</Text>
+        <Text fontWeight="700">Index:</Text>
         <Text>{derivationIndex}</Text>
       </Box>
       <Flex alignItems="center">
@@ -136,14 +136,14 @@ export const AccountItem = ({ derivationIndex }: AccountItemProps) => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent maxWidth="50rem">
+        <ModalContent maxWidth="50rem" rounded="md">
           <ModalBody>
-            <Box py={2}>
-              <Text>Address:</Text>
+            <Box py={3}>
+              <Text fontWeight="700">Address:</Text>
               <Text>{address}</Text>
             </Box>
-            <Box py={2}>
-              <Text>Private key:</Text>
+            <Box py={3}>
+              <Text fontWeight="700">Private key:</Text>
               <Text>{privateKeyHex}</Text>
             </Box>
           </ModalBody>

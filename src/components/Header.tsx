@@ -8,7 +8,7 @@ export const Header = () => {
   const location = useLocation();
 
   return (
-    <React.Fragment>
+    <Box backgroundColor="gray.100">
       <Box px={4} py={4} maxWidth="1024px" margin="0 auto">
         <Flex alignItems="center" justifyContent="space-between">
           <Text>blockstack-devtool</Text>
@@ -38,6 +38,6 @@ export const Header = () => {
         </Flex>
       </Box>
       <Divider margin="0" />
-    </React.Fragment>
+    </Box>
   );
 };

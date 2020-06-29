@@ -20,11 +20,11 @@ export const Accounts = () => {
 
         <Flex py={4}>
           <Box flex="1">
-            <Text>Mnemonic:</Text>
+            <Text fontWeight="700">Mnemonic:</Text>
             <Text>{appConfig.mnemonic}</Text>
           </Box>
           <Box>
-            <Text>Path:</Text>
+            <Text fontWeight="700">Path:</Text>
             <Text>{`${derivationPaths[ChainID.Testnet].substr(
               0,
               derivationPaths[ChainID.Testnet].length - 1
