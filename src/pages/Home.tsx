@@ -107,7 +107,7 @@ export const Home = () => {
           </Alert>
         )}
         <Button variantColor="teal" mb="2" onClick={onSelectFolder}>
-          Select folder
+          Select project
         </Button>
         <Text color="gray.500" fontSize="xs">
           Select your project folder to get started
