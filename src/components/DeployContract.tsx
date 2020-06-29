@@ -12,7 +12,7 @@ import {
 import { useFormik, FormikErrors } from "formik";
 import {
   broadcastTransaction,
-  makeSmartContractDeploy,
+  makeContractDeploy,
   StacksTransaction,
   StacksTestnet,
 } from "@blockstack/stacks-transactions";
@@ -65,7 +65,7 @@ export const DeployContract = ({ contractFileName }: DeployContractProps) => {
           appConfig.rootNode,
           Number(values.accountIndex)
         );
-        transaction = await makeSmartContractDeploy({
+        transaction = await makeContractDeploy({
           contractName: values.name,
           codeBody: contract,
           senderKey: account.privateKeyHex,
@@ -136,7 +136,13 @@ export const DeployContract = ({ contractFileName }: DeployContractProps) => {
               {Array.from(Array(appConfig.numberDisplayed).keys()).map(
                 (_, index) => (
                   <option key={index} value={index}>
-                    Account - {index}
+                    Account {index} -{" "}
+                    {
+                      getAccountFromDerivationPathIndex(
+                        appConfig.rootNode,
+                        index
+                      ).address
+                    }
                   </option>
                 )
               )}
