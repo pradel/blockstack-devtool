@@ -12,3 +12,5 @@ A simple devtool interface to help you manage different wallets on testnet.
 - Derive 10 accounts (addresses and private keys) from the Mnemonic
 - Display informations about the testnet (eg: current block)
 - Easy access to the private key of all the accounts for testing (eg: to be reused easily with the blockstack cli)
+
+<div style="text-align:center"><img src="assets/homepage.png" width="600" ></div>
