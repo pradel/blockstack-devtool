@@ -10,9 +10,15 @@
     "build": "rm -rf build dist && yarn build-react && yarn build-electron && yarn package",
     "build-react": "react-scripts build",
     "build-electron": "mkdir build/src && cp -r electron/. build/electron",
-    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js -c.mac.identity=null --publish never",
+    "package": "electron-builder build --mac -c.mac.identity=null --win --linux -c.extraMetadata.main=build/electron/main.js --publish never",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "repository": "git+https://github.com/pradel/blockstack-devtool.git",
+  "author": {
+    "name": "Léo Pradel",
+    "email": "pradel.leo@gmail.com",
+    "url": "https://www.leopradel.com"
   },
   "build": {
     "files": [
@@ -25,7 +31,13 @@
       "owner": "pradel"
     },
     "productName": "blockstack-devtool",
-    "appId": "com.leopradel.blockstack-devtool"
+    "appId": "com.leopradel.blockstack-devtool",
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
   },
   "dependencies": {
     "@blockstack/keychain": "0.6.0",
