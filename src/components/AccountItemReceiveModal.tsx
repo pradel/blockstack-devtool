@@ -58,11 +58,11 @@ export const AccountItemReceiveModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
-      <ModalContent maxWidth="50rem">
+      <ModalContent rounded="md">
         <ModalBody>
-          <Flex mt="3" justifyContent="center">
+          <Flex mt="8" justifyContent="center">
             <QRCode value={address} />
           </Flex>
           <Flex mt="8" justifyContent="center">

@@ -12,9 +12,9 @@ export const HeaderInfos = () => {
 
   return (
     <React.Fragment>
-      <Flex>
-        <Box>
-          <Text>Current block</Text>
+      <Flex justifyContent="center" py="4">
+        <Box textAlign="center">
+          <Text fontWeight="700">Current block</Text>
           <Text>{!blocksData ? "..." : blocksData.results[0].height}</Text>
         </Box>
       </Flex>

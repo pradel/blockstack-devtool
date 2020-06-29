@@ -3,15 +3,10 @@ import { generateMnemonicRootKeychain } from "@blockstack/keychain";
 import { Spinner, Flex } from "@chakra-ui/core";
 import { mnemonicToSeed } from "bip39";
 import { bip32 } from "bitcoinjs-lib";
-
-const appConfigStorageKey = "blockstack-devtool";
-
-interface BlockstackAppConfigStorage {
-  mnemonic: string;
-  numberDisplayed: number;
-}
+const { ipcRenderer } = window.require("electron");
 
 interface BlockstackAppConfig {
+  folderPath: string;
   mnemonic: string;
   numberDisplayed: number;
   rootNode: bip32.BIP32Interface;
@@ -22,41 +17,59 @@ const AppConfigContext = createContext<{
 }>({} as any);
 
 interface AppConfigProviderProps {
+  folderPath: string;
   children: React.ReactNode;
 }
 
-export const AppConfigProvider = ({ children }: AppConfigProviderProps) => {
+export const AppConfigProvider = ({
+  children,
+  folderPath,
+}: AppConfigProviderProps) => {
   const [appConfig, setAppConfig] = useState<BlockstackAppConfig | undefined>(
     undefined
   );
 
   useEffect(() => {
-    // When the app mount we get the config from the storage
-    const data = localStorage.getItem(appConfigStorageKey);
-    if (!data) {
-      generateNewAppConfig();
-    } else {
-      loadAppConfig(JSON.parse(data));
-    }
+    // When the app mount we get the config for the project
+    loadAppConfig();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const generateNewAppConfig = async () => {
-    const mnemonic = await generateMnemonicRootKeychain(128);
-    const defaultSettings: BlockstackAppConfigStorage = {
-      mnemonic: mnemonic.plaintextMnemonic,
-      numberDisplayed: 10,
-    };
-    localStorage.setItem(appConfigStorageKey, JSON.stringify(defaultSettings));
-    await loadAppConfig(defaultSettings);
-  };
-
-  const loadAppConfig = async (data: BlockstackAppConfigStorage) => {
-    const seedBuffer = await mnemonicToSeed(data.mnemonic);
+  const loadAppConfig = async () => {
+    let mnemonic: string | undefined = await ipcRenderer.invoke(
+      "get-project-store-value",
+      folderPath,
+      "mnemonic"
+    );
+    if (!mnemonic) {
+      mnemonic = (await generateMnemonicRootKeychain(128)).plaintextMnemonic;
+      await ipcRenderer.invoke(
+        "set-project-store-value",
+        folderPath,
+        "mnemonic",
+        mnemonic
+      );
+    }
+    let numberDisplayed: number | undefined = await ipcRenderer.invoke(
+      "get-project-store-value",
+      folderPath,
+      "numberDisplayed"
+    );
+    if (!numberDisplayed) {
+      numberDisplayed = 10;
+      await ipcRenderer.invoke(
+        "set-project-store-value",
+        folderPath,
+        "numberDisplayed",
+        numberDisplayed
+      );
+    }
+    const seedBuffer = await mnemonicToSeed(mnemonic);
     const rootNode = bip32.fromSeed(seedBuffer);
     setAppConfig({
-      mnemonic: data.mnemonic,
-      numberDisplayed: data.numberDisplayed,
+      folderPath,
+      mnemonic: mnemonic,
+      numberDisplayed: numberDisplayed,
       rootNode,
     });
   };

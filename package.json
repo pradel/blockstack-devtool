@@ -1,16 +1,34 @@
 {
   "name": "blockstack-devtools",
   "private": true,
+  "version": "0.0.1",
+  "productName": "blockstack-devtool",
+  "main": "electron/main.js",
+  "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "export BROWSER=none && react-scripts start",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
     "build": "react-scripts build",
+    "build-electron": "mkdir build/src && cp -r electron/. build/electron",
+    "package": "electron-builder build --mac --win -c.extraMetadata.main=build/electron/main.js -c.mac.identity=null --publish never",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "blockstack-devtool",
+      "owner": "pradel"
+    }
   },
   "dependencies": {
     "@blockstack/keychain": "0.6.0",
     "@blockstack/stacks-blockchain-sidecar-types": "0.0.18",
-    "@blockstack/stacks-transactions": "0.4.6",
+    "@blockstack/stacks-transactions": "0.5.0-beta.1",
     "@chakra-ui/core": "0.8.0",
     "@emotion/core": "10.0.28",
     "@emotion/styled": "10.0.27",
@@ -21,6 +39,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-feather": "2.0.8",
+    "react-router-dom": "5.2.0",
     "swr": "0.2.3"
   },
   "devDependencies": {
@@ -28,6 +47,10 @@
     "@types/qrcode.react": "1.0.1",
     "@types/react": "16.9.38",
     "@types/react-dom": "16.9.8",
+    "@types/react-router-dom": "5.1.5",
+    "electron": "9.0.5",
+    "electron-builder": "22.7.0",
+    "electron-store": "5.2.0",
     "react-scripts": "3.4.1",
     "typescript": "3.9.5"
   },

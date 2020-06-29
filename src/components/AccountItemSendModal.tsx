@@ -22,6 +22,11 @@ import {
 import Big from "bn.js";
 import { stacksToMicro } from "../utils";
 
+interface AccountItemSendModalValues {
+  address: string;
+  amount: string;
+}
+
 interface AccountItemSendModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -34,16 +39,13 @@ export const AccountItemSendModal = ({
   privateKeyHex,
 }: AccountItemSendModalProps) => {
   const toast = useToast();
-  const formik = useFormik({
+  const formik = useFormik<AccountItemSendModalValues>({
     initialValues: {
       address: "",
       amount: "",
     },
     validate: (values) => {
-      const errors: FormikErrors<{
-        address: string;
-        amount: string;
-      }> = {};
+      const errors: FormikErrors<AccountItemSendModalValues> = {};
       if (!values.address) {
         errors.address = "Address is required";
       }
@@ -103,9 +105,9 @@ export const AccountItemSendModal = ({
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <ModalOverlay />
-      <ModalContent maxWidth="50rem">
+      <ModalContent rounded="md">
         <ModalBody>
           <FormControl mt="3">
             <FormLabel htmlFor="address">Address</FormLabel>
@@ -134,6 +136,7 @@ export const AccountItemSendModal = ({
           <Button
             variantColor="teal"
             isLoading={formik.isSubmitting}
+            isDisabled={formik.isSubmitting}
             mr="3"
             onClick={formik.handleSubmit}
           >
