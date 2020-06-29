@@ -80,6 +80,26 @@ export const AccountItemSendModal = ({
       try {
         const data = await broadcastTransaction(transaction, network);
         console.log(data);
+        if (typeof data === "string") {
+          toast({
+            title: "Transaction send.",
+            description: `Transaction id: ${data}`,
+            status: "success",
+            duration: 6000,
+            isClosable: true,
+          });
+          onCloseModal();
+        } else {
+          toast({
+            title: "Failed to broadcast transaction.",
+            description: `${data.error} - ${data.reason}`,
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+          setSubmitting(false);
+          return;
+        }
       } catch (error) {
         console.error(error);
         toast({
@@ -92,24 +112,23 @@ export const AccountItemSendModal = ({
         setSubmitting(false);
         return;
       }
-
-      toast({
-        title: "Transaction send.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      formik.resetForm();
-      onClose();
     },
   });
 
+  const onCloseModal = () => {
+    formik.resetForm();
+    onClose();
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="lg">
+    <Modal isOpen={isOpen} onClose={onCloseModal} size="lg">
       <ModalOverlay />
       <ModalContent rounded="md">
         <ModalBody>
-          <FormControl mt="3">
+          <FormControl
+            mt="3"
+            isInvalid={Boolean(formik.errors.address && formik.touched.address)}
+          >
             <FormLabel htmlFor="address">Address</FormLabel>
             <Input
               id="address"
@@ -120,7 +139,10 @@ export const AccountItemSendModal = ({
             />
             <FormErrorMessage>{formik.errors.address}</FormErrorMessage>
           </FormControl>
-          <FormControl mt="3">
+          <FormControl
+            mt="3"
+            isInvalid={Boolean(formik.errors.amount && formik.touched.amount)}
+          >
             <FormLabel htmlFor="amount">Amount</FormLabel>
             <Input
               id="amount"
@@ -142,7 +164,7 @@ export const AccountItemSendModal = ({
           >
             Send
           </Button>
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onCloseModal}>Close</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
